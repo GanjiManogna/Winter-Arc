@@ -34,7 +34,7 @@ Personal goals are easy to set and hard to sustain. Habit tracking can also beco
 - **Sleep Tracker:** Record bedtime and wake-up times. Durations are calculated across midnight and rejected when invalid or longer than 16 hours.
 - **Custom habits:** Create boolean or measurable habits, archive them, and retain dated definitions for historical views.
 - **Progress and reflection:** Review daily progress and history, explore weekly and monthly analysis, and save weekly and monthly reflections.
-- **Friends Challenge:** Create private challenges, invite members, and compare aggregate completion progress.
+- **Friends Challenge:** Create private challenges, invite friends with invitation codes, manage membership, and compare aggregate progress on a leaderboard without exposing personal ritual entries, sleep data, or reflections.
 - **Account access:** Register, sign in, sign out, and protect authenticated routes with Supabase Auth.
 - **Reminders and installability:** Opt in to browser push notifications and install the responsive app as a Progressive Web App (PWA) on supported browsers.
 
@@ -63,7 +63,7 @@ flowchart LR
   auth -->|authenticated session| client
   client --> dataApi[Supabase Data API]
   dataApi --> db[(PostgreSQL)]
-  db --> rls{RLS authorization using auth.uid()}
+  db --> rls{"RLS authorization using auth.uid()"}
   rls --> rows[Account-owned rows]
   client --> challenge[Authenticated challenge RPCs]
   challenge --> db
