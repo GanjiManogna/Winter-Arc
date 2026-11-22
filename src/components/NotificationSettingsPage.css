@@ -1,0 +1,309 @@
+.notification-settings-page {
+  --reminder-ink: #393346;
+  --reminder-muted: #716b7e;
+  --reminder-plum: #756581;
+  --reminder-line: rgba(93, 78, 112, 0.18);
+  --reminder-card: rgba(250, 247, 252, 0.78);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--reminder-ink);
+  background:
+    radial-gradient(ellipse at 82% 11%, rgba(179, 162, 199, 0.38), transparent 36%),
+    radial-gradient(ellipse at 8% 43%, rgba(218, 199, 216, 0.28), transparent 40%),
+    linear-gradient(180deg, #eee8f1 0%, #e2d8e8 54%, #eee5e8 100%);
+}
+
+.notification-settings-page .arc-header {
+  background: linear-gradient(
+    180deg,
+    rgba(238, 232, 241, 0.94) 0%,
+    rgba(238, 232, 241, 0.58) 70%,
+    rgba(238, 232, 241, 0) 100%
+  );
+}
+
+.notification-settings-inner {
+  width: min(680px, 100%);
+  margin: 28px auto 0;
+  text-align: left;
+}
+
+.notification-hero {
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.notification-hero-motif {
+  display: block;
+  width: 112px;
+  height: auto;
+  margin: 0 auto 7px;
+  color: #766783;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.82;
+  filter: drop-shadow(0 8px 18px rgba(118, 103, 131, 0.18));
+}
+
+.notification-hero h1 {
+  margin: 0;
+  color: var(--reminder-ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(38px, 7vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.notification-hero .copy {
+  max-width: 34rem;
+  margin: 12px auto 0;
+  color: var(--reminder-muted);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.notification-status {
+  min-height: 1.4em;
+  margin: 14px 0;
+  color: var(--reminder-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.notification-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 18px;
+  margin: 0 0 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--reminder-line);
+  border-radius: 18px;
+  background: var(--reminder-card);
+  color: var(--reminder-muted);
+  font-size: 13px;
+  box-shadow: 0 12px 32px rgba(77, 61, 91, 0.055);
+}
+
+.notification-summary strong {
+  min-width: 0;
+  color: var(--reminder-ink);
+  font-weight: 500;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.notification-toggle,
+.notification-save {
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid rgba(100, 82, 120, 0.32);
+  border-radius: 999px;
+  background: rgba(249, 245, 251, 0.78);
+  color: #5f526d;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease, opacity 160ms ease;
+}
+
+.notification-toggle:hover,
+.notification-save:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 252, 255, 0.94);
+}
+
+.notification-toggle:active,
+.notification-save:active {
+  transform: translateY(1px);
+}
+
+.notification-toggle:focus-visible,
+.notification-save:focus-visible,
+.notification-category-toggle input:focus-visible,
+.notification-time-label input:focus-visible,
+.notification-time-label select:focus-visible {
+  outline: 2px solid #766783;
+  outline-offset: 3px;
+}
+
+.notification-toggle:disabled,
+.notification-save:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.notification-categories {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.notification-category {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(112px, 128px);
+  align-items: center;
+  gap: 10px 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--reminder-line);
+  border-radius: 16px;
+  background: rgba(250, 247, 252, 0.58);
+}
+
+.notification-category-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 44px;
+  color: var(--reminder-ink);
+  cursor: pointer;
+}
+
+.notification-category-toggle span {
+  line-height: 1.4;
+}
+
+.notification-category-toggle input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  accent-color: #766783;
+}
+
+.notification-category-description {
+  grid-column: 1 / -1;
+  margin: 0 0 2px 30px;
+  color: var(--reminder-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.notification-time-label {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  color: var(--reminder-muted);
+  font-size: 11px;
+}
+
+.notification-time-label input,
+.notification-time-label select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 9px;
+  border: 1px solid rgba(100, 82, 120, 0.24);
+  border-radius: 10px;
+  background: rgba(252, 249, 253, 0.82);
+  color: var(--reminder-ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.notification-weekly {
+  margin: 24px 0 20px;
+  padding: 17px;
+  border: 1px solid rgba(93, 78, 112, 0.2);
+  border-radius: 18px;
+  background: rgba(247, 242, 249, 0.68);
+  box-shadow: 0 12px 32px rgba(77, 61, 91, 0.045);
+}
+
+.notification-weekly-toggle {
+  font-weight: 500;
+}
+
+.notification-weekly > .notification-category-description {
+  margin: 0 0 14px 30px;
+}
+
+.notification-weekly-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(110px, 1fr) minmax(100px, 0.8fr);
+  gap: 12px;
+}
+
+.notification-weekly-name input {
+  min-width: 0;
+}
+
+.notification-save {
+  background: #756581;
+  border-color: #756581;
+  color: #fffaff;
+}
+
+.notification-save:hover {
+  background: #685774;
+}
+
+.notification-note {
+  color: var(--reminder-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 650px) {
+  .notification-settings-page {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .notification-settings-inner {
+    margin-top: 18px;
+  }
+
+  .notification-hero {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-summary {
+    gap: 9px 12px;
+    padding: 15px;
+  }
+
+  .notification-category {
+    grid-template-columns: minmax(0, 1fr) minmax(106px, 118px);
+    gap: 8px 10px;
+    padding: 11px 12px;
+  }
+
+  .notification-category-toggle {
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .notification-weekly-fields {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .notification-weekly-name {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 360px) {
+  .notification-category {
+    grid-template-columns: minmax(0, 1fr) 106px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notification-toggle,
+  .notification-save {
+    transition: none;
+  }
+}

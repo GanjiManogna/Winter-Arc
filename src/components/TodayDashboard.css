@@ -1,0 +1,1088 @@
+/* =====================================================
+   WINTER ARC — TODAY DASHBOARD
+===================================================== */
+
+.today-page {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    width: 100%;
+  
+    overflow-x: hidden;
+    padding: 0 24px 80px;
+  
+    box-sizing: border-box;
+  
+    background:
+      radial-gradient(
+        circle at 50% -10%,
+        rgba(239, 205, 151, 0.38),
+        transparent 38%
+      ),
+      linear-gradient(
+        180deg,
+        #f6f0e5 0%,
+        #eee4d4 100%
+      );
+  
+    color: #29251f;
+  
+    font-family:
+      "Manrope",
+      Arial,
+      Helvetica,
+      sans-serif;
+    transition: color 1s ease;
+  }
+
+  /* Keep Today on the same centered content frame as Journey and History. */
+  .today-page .arc-header {
+    width: min(760px, 100%);
+  }
+
+  .today-account-loading > p {
+    width: min(760px, 100%);
+    margin: 22vh auto 0;
+    color: #746c61;
+    text-align: center;
+  }
+
+  .today-data-notice {
+    width: min(760px, 100%);
+    box-sizing: border-box;
+    margin: 22px auto 0;
+    padding: 12px 16px;
+    border: 1px solid rgba(100, 75, 45, 0.14);
+    border-radius: 14px;
+    background: rgba(255, 252, 246, 0.72);
+    color: #746c61;
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .today-data-notice--error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .today-data-notice button {
+    border: 0;
+    background: transparent;
+    color: #8a6240;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .today-page::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: transparent;
+    content: "";
+    pointer-events: none;
+    transition: background-color 1.2s ease;
+  }
+  
+  
+  /* =========================================
+     HEADER
+  ========================================= */
+  
+  .today-header {
+    position: relative;
+    width: min(760px, 100%);
+    margin: 36px auto 0;
+    text-align: center;
+    overflow: visible;
+    animation: todayEnter 1s ease;
+  }
+
+  .today-glow {
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    z-index: 0;
+    width: min(540px, 90%);
+    height: 280px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(232, 186, 112, 0.42),
+      transparent 68%
+    );
+    pointer-events: none;
+    animation: todayBreathe 10s ease-in-out infinite;
+  }
+
+  .today-sparkles {
+    position: absolute;
+    inset: 8px 8% auto;
+    z-index: 0;
+    height: 90px;
+    pointer-events: none;
+    color: #c4a070;
+  }
+
+  .today-sparkles span {
+    position: absolute;
+    font-size: 10px;
+    opacity: 0.35;
+    animation: todaySparkle 8s ease-in-out infinite;
+  }
+
+  .today-sparkles span:nth-child(1) { left: 8%; top: 18px; }
+  .today-sparkles span:nth-child(2) { left: 24%; top: 4px; animation-delay: 1.4s; }
+  .today-sparkles span:nth-child(3) { left: 52%; top: 22px; animation-delay: 2.6s; }
+  .today-sparkles span:nth-child(4) { right: 18%; top: 8px; animation-delay: 0.8s; }
+  .today-sparkles span:nth-child(5) { right: 6%; top: 28px; animation-delay: 3.2s; }
+
+  .today-header > *:not(.today-glow):not(.today-sparkles) {
+    position: relative;
+    z-index: 1;
+  }
+  
+  
+  .today-date {
+    margin: 0 0 12px;
+  
+    color: #987656;
+  
+    font-family: "DM Mono", monospace;
+  
+    font-size: 10px;
+  
+    letter-spacing: 0.18em;
+  
+    text-transform: uppercase;
+  }
+
+  .today-meta {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 26px;
+    color: #b08a62;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  
+  
+  .today-header h1 {
+    margin: 0;
+    max-width: 15ch;
+    margin-inline: auto;
+  
+    font-size:
+      clamp(52px, 8vw, 92px);
+  
+    line-height: 0.95;
+  
+    letter-spacing: -0.06em;
+  
+    font-weight: 500;
+  }
+  
+  
+  .today-header h1 em {
+    display: block;
+  
+    margin-top: 8px;
+  
+    color: #b47d4d;
+  
+    font-family:
+      "Playfair Display",
+      Georgia,
+      serif;
+  
+    font-style: italic;
+  
+    font-weight: 400;
+  }
+  
+  
+  .today-message {
+    margin: 30px 0 0;
+    max-width: 48ch;
+    margin-right: auto;
+    margin-left: auto;
+  
+    color: #746c61;
+  
+    font-size: 15px;
+  
+    line-height: 1.8;
+  }
+  
+  
+  /* =========================================
+     PROGRESS
+  ========================================= */
+  
+  .today-progress {
+    width: min(760px, 100%);
+  
+    margin: 70px auto 55px;
+  
+    padding: 24px 28px;
+  
+    box-sizing: border-box;
+  
+    border: 1px solid
+      rgba(100, 75, 45, 0.12);
+  
+    border-radius: 22px;
+  
+    background:
+      rgba(255, 252, 246, 0.65);
+  
+    box-shadow:
+      0 20px 60px
+      rgba(89, 66, 39, 0.07);
+  
+    backdrop-filter: blur(14px);
+  }
+  
+  
+  .progress-top {
+    display: flex;
+  
+    justify-content: space-between;
+  
+    align-items: center;
+  
+    margin-bottom: 14px;
+  
+    color: #756653;
+  
+    font-family: monospace;
+  
+    font-size: 10px;
+  
+    letter-spacing: 0.14em;
+  }
+  
+  
+  .progress-top strong {
+    color: #a46f43;
+  
+    font-size: 14px;
+  }
+
+  .progress-top strong em {
+    margin-left: 6px;
+    color: #9b8a78;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    font-weight: 400;
+  }
+  
+  
+  .progress-track {
+    width: 100%;
+  
+    height: 6px;
+  
+    overflow: hidden;
+  
+    border-radius: 100px;
+  
+    background:
+      rgba(117, 91, 61, 0.12);
+  }
+  
+  
+  .progress-fill {
+    height: 100%;
+    max-width: 100%;
+  
+    border-radius: inherit;
+  
+    background:
+      linear-gradient(
+        90deg,
+        #a87548,
+        #e1bd7d
+      );
+  
+    transition:
+      width 0.7s
+      cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  
+  .today-progress > p {
+    margin: 15px 0 0;
+  
+    color: #918477;
+  
+    font-family:
+      Georgia,
+      serif;
+  
+    font-size: 13px;
+  
+    font-style: italic;
+  
+    text-align: center;
+  }
+  
+  
+  /* =========================================
+     RITUAL SECTION
+  ========================================= */
+  
+  .ritual-checklist {
+    width: min(760px, 100%);
+  
+    margin: 0 auto;
+  }
+  
+  
+  .ritual-heading {
+    display: flex;
+  
+    justify-content: space-between;
+  
+    align-items: baseline;
+  
+    margin-bottom: 18px;
+  }
+  
+  
+  .ritual-heading p {
+    margin: 0;
+  
+    color: #745b45;
+  
+    font-family: monospace;
+  
+    font-size: 10px;
+  
+    letter-spacing: 0.16em;
+  }
+  
+  
+  .ritual-heading span {
+    color: #9b9185;
+  
+    font-size: 11px;
+  }
+  
+  
+.ritual-items {
+    display: flex;
+  
+    flex-direction: column;
+  
+    gap: 10px;
+}
+
+.custom-habit-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.custom-habit-row .ritual-item {
+  min-width: 0;
+}
+
+.custom-habit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.custom-habit-archive,
+.custom-habit-edit {
+  min-width: 64px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(100, 75, 45, 0.16);
+  border-radius: 13px;
+  background: rgba(255, 252, 247, 0.55);
+  color: #786c5e;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.custom-habit-archive:hover:not(:disabled),
+.custom-habit-edit:hover:not(:disabled) {
+  border-color: rgba(100, 75, 45, 0.3);
+  background: rgba(255, 252, 247, 0.9);
+}
+
+.custom-habit-archive:active:not(:disabled),
+.custom-habit-edit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.custom-habit-archive:focus-visible,
+.custom-habit-edit:focus-visible {
+  outline: 2px solid #a87548;
+  outline-offset: 2px;
+}
+
+.custom-habit-archive:disabled,
+.custom-habit-edit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.custom-habit-action-error {
+  margin: -6px 0 12px;
+  color: #8b4d3e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.today-arc-ended {
+  margin: 0 0 16px;
+  color: var(--today-muted, #6f6a62);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ritual-item.is-arc-ended {
+  cursor: default;
+  opacity: 0.78;
+}
+
+.add-habit-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+  .add-habit-button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 16px 20px;
+    border: 1px dashed rgba(100, 75, 45, 0.22);
+    border-radius: 17px;
+    background: rgba(255, 252, 247, 0.42);
+    color: #8a6240;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    transition: transform 0.2s ease, background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .add-habit-button:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 254, 250, 0.8);
+    border-color: rgba(164, 116, 70, 0.35);
+  }
+
+  .add-habit-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+    transform: none;
+  }
+
+  .ritual-item.read-only {
+    cursor: default;
+  }
+
+  .ritual-item.read-only:hover,
+  .ritual-item.read-only:active {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .add-habit-button:active {
+    transform: translateY(1px) scale(0.995);
+  }
+
+  .add-habit-button:focus-visible,
+  .ritual-item:focus-visible {
+    outline: 2px solid #a87548;
+    outline-offset: 3px;
+  }
+  
+  
+  /* =========================================
+     RITUAL CARD
+  ========================================= */
+  
+  .ritual-item {
+    width: 100%;
+  
+    display: grid;
+  
+    grid-template-columns:
+      52px
+      1fr
+      35px;
+  
+    align-items: center;
+  
+    gap: 17px;
+  
+    padding: 17px 20px;
+  
+    box-sizing: border-box;
+  
+    border: 1px solid
+      rgba(100, 75, 45, 0.1);
+  
+    border-radius: 17px;
+  
+    background:
+      rgba(255, 252, 247, 0.72);
+  
+    color: #29251f;
+  
+    text-align: left;
+  
+    cursor: pointer;
+  
+    appearance: none;
+  
+    outline: none;
+  
+    font-family: inherit;
+    text-decoration: none;
+  
+    transition:
+      transform 0.3s ease,
+      background 0.3s ease,
+      border 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  
+  
+  .ritual-item:hover {
+    transform: translateY(-2px);
+  
+    background:
+      rgba(255, 254, 250, 0.95);
+  
+    border-color:
+      rgba(164, 116, 70, 0.3);
+  
+    box-shadow:
+      0 15px 35px
+      rgba(91, 67, 38, 0.08);
+  }
+  
+  
+  .ritual-item:active {
+    transform:
+      translateY(-1px)
+      scale(0.995);
+  }
+  
+  
+  /* COMPLETED */
+  
+  .ritual-item.completed {
+    background:
+      rgba(225, 211, 185, 0.48);
+  
+    border-color:
+      rgba(165, 121, 73, 0.28);
+  }
+  
+  
+  .ritual-item.completed .ritual-info h3 {
+    color: #8b765e;
+  
+    text-decoration:
+      line-through;
+  
+    text-decoration-color:
+      rgba(139, 118, 94, 0.45);
+  }
+  
+  
+  /* =========================================
+     ICON
+  ========================================= */
+  
+  .ritual-icon {
+    width: 44px;
+  
+    height: 44px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    border-radius: 50%;
+  
+    background:
+      rgba(177, 132, 81, 0.11);
+  
+    color: #9b7048;
+  
+    font-size: 18px;
+  
+    transition:
+      transform 0.35s ease,
+      background 0.35s ease,
+      color 0.35s ease;
+  }
+  
+  
+  .ritual-item:hover .ritual-icon {
+    transform: scale(1.04);
+  }
+  
+  
+  .ritual-item.completed .ritual-icon {
+    background: #a98055;
+  
+    color: white;
+  
+    transform:
+      scale(1.05);
+  }
+  
+  
+  /* =========================================
+     TEXT
+  ========================================= */
+  
+  .ritual-info h3 {
+    margin: 0 0 5px;
+  
+    font-size: 15px;
+  
+    font-weight: 500;
+  
+    letter-spacing: -0.01em;
+  }
+  
+  
+  .ritual-info p {
+    margin: 0;
+  
+    color: #93887b;
+  
+    font-size: 12px;
+  
+    line-height: 1.4;
+
+    font-variant-numeric: tabular-nums;
+  }
+  
+  
+  /* =========================================
+     CHECK
+  ========================================= */
+  
+  .ritual-check {
+    color: #a99a88;
+  
+    font-size: 22px;
+  
+    text-align: center;
+  
+    transition:
+      transform 0.3s ease,
+      color 0.3s ease;
+  }
+  
+  
+  .ritual-item.completed .ritual-check {
+    color: #a98055;
+  
+    transform:
+      scale(1.15);
+  }
+
+  .ritual-item.in-progress .ritual-check,
+  .ritual-check.is-progress {
+    color: #b08a62;
+    opacity: 0.85;
+    transform: none;
+  }
+
+  .ritual-item.is-above .ritual-info h3 {
+    text-decoration: none;
+  }
+
+  .ritual-check.is-above {
+    color: #a98055;
+    opacity: 0.9;
+  }
+  
+  
+  /* =========================================
+     FOOTER
+  ========================================= */
+  
+  .today-footer {
+    display: flex;
+  
+    justify-content: center;
+  
+    align-items: center;
+  
+    gap: 15px;
+  
+    margin-top: 70px;
+  
+    color: #9c8c7a;
+  }
+  
+  
+  .today-footer p {
+    margin: 0;
+  
+    font-family:
+      Georgia,
+      serif;
+  
+    font-size: 16px;
+  
+    font-style: italic;
+  }
+  
+  
+  /* =========================================
+     SMALL DIVINE DETAILS
+  ========================================= */
+  
+  .today-footer span {
+    font-size: 10px;
+  
+    opacity: 0.7;
+  }
+
+  /* =========================================
+     MOBILE
+  ========================================= */
+  
+  @media (max-width: 650px) {
+  
+    .today-page {
+      padding:
+        0
+        16px
+        60px;
+    }
+
+    .today-header {
+      margin-top: 18px;
+    }
+  
+  
+    .today-header h1 {
+      font-size: clamp(40px, 12vw, 50px);
+      text-wrap: balance;
+    }
+  
+  
+    .today-message {
+      font-size: 13px;
+    }
+  
+  
+    .today-progress {
+      margin-top: 50px;
+      padding: 18px;
+    }
+
+    .progress-top {
+      flex-wrap: wrap;
+      column-gap: 10px;
+      row-gap: 7px;
+      letter-spacing: 0.1em;
+    }
+  
+  
+    .ritual-heading {
+      flex-direction: column;
+  
+      gap: 7px;
+    }
+  
+  
+    .ritual-item {
+      grid-template-columns:
+        43px
+        1fr
+        28px;
+  
+      gap: 12px;
+  
+      padding:
+        14px;
+      min-height: 68px;
+    }
+
+    .ritual-info {
+      min-width: 0;
+    }
+  
+  
+    .ritual-icon {
+      width: 38px;
+  
+      height: 38px;
+  
+      font-size: 16px;
+    }
+  
+  
+    .ritual-info h3 {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+  
+  
+    .ritual-info p {
+      font-size: 11px;
+      overflow-wrap: anywhere;
+    }
+  
+  }
+
+  @media (max-width: 380px) {
+    .today-page {
+      padding-right: 12px;
+      padding-left: 12px;
+    }
+
+    .today-meta {
+      gap: 12px;
+      letter-spacing: 0.12em;
+    }
+
+    .today-progress {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .ritual-item {
+      grid-template-columns: 38px minmax(0, 1fr) 26px;
+      gap: 9px;
+      padding: 12px;
+    }
+  }
+
+  @keyframes todayBreathe {
+    0%, 100% { opacity: 0.55; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.08); }
+  }
+
+  @keyframes todaySparkle {
+    0%, 100% { opacity: 0.18; transform: translateY(0); }
+    50% { opacity: 0.55; transform: translateY(-6px); }
+  }
+
+  @keyframes todayEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .today-header h1,
+  .today-header h1 em,
+  .today-date,
+  .today-meta,
+  .today-message,
+  .today-glow,
+  .today-sparkles,
+  .today-progress,
+  .progress-top,
+  .today-progress > p,
+  .ritual-info h3,
+  .ritual-info p,
+  .ritual-check,
+  .today-footer {
+    transition: color 1s ease, background-color 1s ease, border-color 1s ease, box-shadow 1s ease;
+  }
+
+  .today-page[data-time-period="afternoon"]::before {
+    background-color: rgba(255, 247, 224, 0.2);
+  }
+
+  .today-page[data-time-period="afternoon"] .today-glow {
+    background: radial-gradient(circle, rgba(244, 211, 147, 0.42), transparent 70%);
+  }
+
+  .today-page[data-time-period="afternoon"] .today-sparkles {
+    color: #c4aa78;
+  }
+
+  .today-page[data-time-period="evening"]::before {
+    background-color: rgba(171, 105, 75, 0.12);
+  }
+
+  .today-page[data-time-period="evening"] .today-glow {
+    background: radial-gradient(circle, rgba(197, 139, 105, 0.3), transparent 70%);
+  }
+
+  .today-page[data-time-period="evening"] .today-header h1 em {
+    color: #a76e50;
+  }
+
+  .today-page[data-time-period="evening"] .today-meta,
+  .today-page[data-time-period="evening"] .today-date {
+    color: #8e705c;
+  }
+
+  .today-page[data-time-period="night"] {
+    color: #f0edf5;
+  }
+
+  .today-page[data-time-period="night"]::before {
+    background-color: rgba(17, 22, 40, 0.94);
+  }
+
+  .today-page[data-time-period="night"] .today-glow {
+    background: radial-gradient(circle, rgba(157, 164, 207, 0.26), transparent 70%);
+  }
+
+  .today-page[data-time-period="night"] .today-sparkles {
+    color: #c4c2e0;
+  }
+
+  .today-page[data-time-period="night"] .today-date {
+    color: #cbc4d3;
+  }
+
+  .today-page[data-time-period="night"] .today-meta {
+    color: #c7b9df;
+  }
+
+  .today-page[data-time-period="night"] .today-header h1 {
+    color: #f3f0f7;
+  }
+
+  .today-page[data-time-period="night"] .today-header h1 em {
+    color: #c9bce1;
+  }
+
+  .today-page[data-time-period="night"] .today-message {
+    color: #d3ceda;
+  }
+
+  .today-page[data-time-period="night"] .today-progress {
+    border-color: rgba(220, 218, 238, 0.17);
+    background: rgba(38, 43, 62, 0.84);
+    box-shadow: 0 20px 60px rgba(5, 8, 19, 0.2);
+  }
+
+  .today-page[data-time-period="night"] .today-data-notice {
+    border-color: rgba(220, 218, 238, 0.17);
+    background: rgba(38, 43, 62, 0.84);
+    color: #d3ceda;
+  }
+
+  .today-page[data-time-period="night"] .today-data-notice button {
+    color: #e0d3f0;
+  }
+
+  .today-page[data-time-period="night"] .progress-top {
+    color: #d1cadb;
+  }
+
+  .today-page[data-time-period="night"] .progress-top strong {
+    color: #e0d3f0;
+  }
+
+  .today-page[data-time-period="night"] .progress-top strong em,
+  .today-page[data-time-period="night"] .today-progress > p {
+    color: #c4bdce;
+  }
+
+  .today-page[data-time-period="night"] .progress-track {
+    background: rgba(235, 231, 249, 0.16);
+  }
+
+  .today-page[data-time-period="night"] .progress-fill {
+    background: linear-gradient(90deg, #858bbf, #c5b6df);
+    transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), background 1s ease;
+  }
+
+  .today-page[data-time-period="night"] .ritual-heading p {
+    color: #ddd3e6;
+  }
+
+  .today-page[data-time-period="night"] .ritual-heading span {
+    color: #c2bdcb;
+  }
+
+  .today-page[data-time-period="night"] .ritual-item {
+    border-color: rgba(220, 218, 238, 0.14);
+    background: rgba(39, 45, 64, 0.84);
+    color: #f0edf5;
+    box-shadow: 0 12px 32px rgba(5, 8, 19, 0.1);
+    transition: transform 0.3s ease, background 1s ease, border-color 1s ease, box-shadow 1s ease, color 1s ease;
+  }
+
+  .today-page[data-time-period="night"] .ritual-item:hover {
+    border-color: rgba(202, 190, 226, 0.3);
+    background: rgba(49, 55, 76, 0.94);
+  }
+
+  .today-page[data-time-period="night"] .ritual-item.completed {
+    border-color: rgba(195, 180, 221, 0.28);
+    background: rgba(62, 62, 84, 0.9);
+  }
+
+  .today-page[data-time-period="night"] .ritual-item.completed .ritual-info h3 {
+    color: #c8bfd5;
+  }
+
+  .today-page[data-time-period="night"] .ritual-icon {
+    background: rgba(193, 184, 220, 0.14);
+    color: #d6cbe8;
+  }
+
+  .today-page[data-time-period="night"] .ritual-item.completed .ritual-icon {
+    background: #8a80a9;
+    color: #fff;
+  }
+
+  .today-page[data-time-period="night"] .ritual-info p {
+    color: #c2bdcd;
+  }
+
+  .today-page[data-time-period="night"] .ritual-check {
+    color: #c4bed2;
+  }
+
+  .today-page[data-time-period="night"] .ritual-item.in-progress .ritual-check {
+    color: #d4c3e6;
+  }
+
+  .today-page[data-time-period="night"] .add-habit-button {
+    border-color: rgba(220, 218, 238, 0.24);
+    background: rgba(39, 45, 64, 0.48);
+    color: #d5cce4;
+  }
+
+    .today-page[data-time-period="night"] .today-footer {
+      color: #c6bfd1;
+    }
+
+@media (prefers-reduced-motion: reduce) {
+    .today-page,
+    .today-page::before,
+    .today-page * {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
