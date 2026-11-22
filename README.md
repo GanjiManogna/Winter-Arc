@@ -182,7 +182,7 @@ npm run build
 
 The production build is generated in `dist/`. Use `npm run preview` to serve that build locally. Run `npm run lint` for ESLint.
 
-**Verification for this README revision:** `npm test` passed all 213 tests. `npm run build` completed successfully; Vite reported that the minified JavaScript bundle (666.14 kB in this build) exceeds its 500 kB advisory threshold.
+**VLatest Project Verification:** `npm test` passed all 213 tests. `npm run build` completed successfully; Vite reported that the minified JavaScript bundle (666.14 kB in this build) exceeds its 500 kB advisory threshold.
 
 These local checks do not validate the hosted Supabase project's migration state or real push delivery.
 
